@@ -5,10 +5,10 @@
 
     {% block body %}
 <section id="car">
-    <a href="index.html">← Retour</a>
-    <h1>BMW IX (Electric)</h1>
+    <a href="{{ path('app_home' )}}">← Retour</a>
+    <h1>{{ voiture.nom }}</h1>
     
-    <p class="description-car">BMW est connu pour ses voitures puissantes et luxueuses - la BMW iX ne fait pas exception. Avec une puissance allant de 326 ch (BMW iX 40) à 523 ch (BMW iX 50) et une autonomie de 408 (BMW iX 40) à 590 kilomètres (BMW iX 50), la BMW iX offre tout ce que l'on peut attendre d'une voiture électrique.</p>
+    <p class="description-car">{{ voiture.description }}</p>
     
     <div class="advantages">
         <div class="single-advantage"><img src="{{ asset('assets/icons/checked.png') }}" alt="" /> Km illimités</div>
@@ -25,9 +25,9 @@
     
     <div class="total-rent">
         <span>Total</span>
-        <span>950,00 €/mois</span>
+        <span>{{ voiture.prixMensuel | number_format(2, ',', ' ') }} €/mois</span>
     </div>
-    <button class="btn-add">Louer pour 950€/mois</button> <!-- Bouton inactif -->
+    <button class="btn-add">Louer pour {{ voiture.prixMensuel | number_format(2, ',', ' ') }} €/mois</button> <!-- Bouton inactif -->
 </section>
 
 <section id="insurances">
