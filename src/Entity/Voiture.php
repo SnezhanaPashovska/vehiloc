@@ -97,15 +97,15 @@ class Voiture
         return $this;
     }
 
-    public function isManuelle(): ?bool
-    {
-        return $this->isManuelle;
-    }
+    public function getIsManuelle(): ?bool
+{
+    return $this->isManuelle;
+}
 
-    public function setManuelle(bool $isManuelle): static
-    {
-        $this->isManuelle = $isManuelle;
+public function setIsManuelle(bool $isManuelle): static
+{
+    $this->isManuelle = $isManuelle;
 
-        return $this;
-    }
+    return $this;
+}
 }

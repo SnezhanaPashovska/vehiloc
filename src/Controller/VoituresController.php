@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\VoitureRepository;
 use App\Entity\Voiture;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\VoitureType;
+use Symfony\Component\HttpFoundation\Request;
 
 class VoituresController extends AbstractController
 {
@@ -30,6 +32,28 @@ class VoituresController extends AbstractController
             'voitures' => $voitures,
         ]);
     }
+
+    #[Route('/voiture/ajouter', name: 'app_add_car')]
+    public function add(Request $request): Response
+    {
+        $voiture = new Voiture();
+        $form = $this->createForm(VoitureType::class, $voiture);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $voiture = $form->getData();
+
+            $this->entityManager->persist($voiture);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_car', ['id' => $voiture->getId()]);
+        }
+
+        return $this->render('add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    } 
 
     #[Route('/voiture/{id}', name: 'app_car')]
     public function voiture(int $id): Response
@@ -62,4 +86,5 @@ class VoituresController extends AbstractController
         //Redirection vers la page d'accueil
         return $this->redirectToRoute('app_home');
     }
+  
 }
